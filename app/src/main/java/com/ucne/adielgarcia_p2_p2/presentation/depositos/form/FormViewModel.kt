@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.serialization.json.Json
 import java.util.Date
 import javax.inject.Inject
 
@@ -37,15 +38,16 @@ class FormViewModel @Inject constructor(
         }
     }
 
-    private fun loadDeposito(deposito: DepositoDto?) {
+    private fun loadDeposito(deposito: String?) {
         if(deposito === null) return
+        val result = Json.decodeFromString<DepositoDto>(deposito)
         _uiState.update { uiState ->
             uiState.copy(
-                idDeposito = deposito.idDeposito,
-                fecha = deposito.fecha.formatAsString(), //custom function
-                idCuenta = deposito.idCuenta.toString(),
-                concepto = deposito.concepto,
-                monto = deposito.monto.toString()
+                idDeposito = result.idDeposito,
+                fecha = result.fecha.formatAsString(), //custom function
+                idCuenta = result.idCuenta.toString(),
+                concepto = result.concepto,
+                monto = result.monto.toString()
             )
         }
     }

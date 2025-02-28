@@ -7,10 +7,10 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 
-class DepositoNavType : NavType<DepositoDto?>(isNullableAllowed = true) {
-    override fun get(bundle: Bundle, key: String): DepositoDto? {
-        return bundle.getString(key)?.let {
-            Json.decodeFromString<DepositoDto>(it)
+class DepositoNavType : NavType<DepositoDto>(isNullableAllowed = false) {
+    override fun get(bundle: Bundle, key: String): DepositoDto {
+        return bundle.getString(key).let {
+            Json.decodeFromString<DepositoDto>(it ?: "")
         }
     }
 
@@ -18,7 +18,6 @@ class DepositoNavType : NavType<DepositoDto?>(isNullableAllowed = true) {
         return Json.decodeFromString<DepositoDto>(value)
     }
 
-    override fun put(bundle: Bundle, key: String, value: DepositoDto?) {
-        bundle.putString(key, Json.encodeToString(value))
-    }
+    override fun put(bundle: Bundle, key: String, value: DepositoDto) {
+        bundle.putString(key, Json.encodeToString(value))    }
 }

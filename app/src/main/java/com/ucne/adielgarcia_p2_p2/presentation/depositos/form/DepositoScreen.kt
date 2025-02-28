@@ -1,5 +1,6 @@
 package com.ucne.adielgarcia_p2_p2.presentation.depositos.form
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -33,7 +34,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.ucne.adielgarcia_p2_p2.data.remote.dto.DepositoDto
 import com.ucne.adielgarcia_p2_p2.presentation.depositos.DepositoEvent
 import com.ucne.adielgarcia_p2_p2.ui.components.AppTextField
 import com.ucne.adielgarcia_p2_p2.ui.components.ShowDatePickerDialog
@@ -41,7 +41,7 @@ import com.ucne.adielgarcia_p2_p2.ui.components.ShowDatePickerDialog
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DepositoScreen(
-    deposito: DepositoDto? = null,
+    deposito: String? = null,
     viewModel: FormViewModel = hiltViewModel(),
     onBack: () -> Unit
 ) {
@@ -54,6 +54,7 @@ fun DepositoScreen(
     val showDatePicker = remember { mutableStateOf(false) }
 
     LaunchedEffect(deposito) {
+        Log.d("RESULT","WAAY" + deposito)
         onEvent(DepositoEvent.LoadDeposito(deposito))
     }
 

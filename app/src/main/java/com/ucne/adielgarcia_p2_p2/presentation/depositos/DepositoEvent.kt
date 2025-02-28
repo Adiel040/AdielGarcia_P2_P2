@@ -1,10 +1,9 @@
 package com.ucne.adielgarcia_p2_p2.presentation.depositos
 
-import com.ucne.adielgarcia_p2_p2.data.remote.dto.DepositoDto
 
 sealed interface DepositoEvent {
     //Load data
-    data class LoadDeposito(val deposito: DepositoDto?): DepositoEvent
+    data class LoadDeposito(val deposito: String?): DepositoEvent
 
     //OnChanges
     data class FechaChange(val fecha: String): DepositoEvent

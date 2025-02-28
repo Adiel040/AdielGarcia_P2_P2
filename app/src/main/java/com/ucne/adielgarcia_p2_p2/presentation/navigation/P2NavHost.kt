@@ -1,17 +1,20 @@
 package com.ucne.adielgarcia_p2_p2.presentation.navigation
 
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.ucne.adielgarcia_p2_p2.data.remote.dto.DepositoDto
 import com.ucne.adielgarcia_p2_p2.presentation.depositos.form.DepositoScreen
 import com.ucne.adielgarcia_p2_p2.presentation.depositos.list.DepositosListScreen
 import com.ucne.adielgarcia_p2_p2.utils.DepositoNavType
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun P2NavHost(navHostController: NavHostController) {
 
@@ -22,7 +25,10 @@ fun P2NavHost(navHostController: NavHostController) {
         composable<Screen.DepositosList> {
             DepositosListScreen(
                 onDepositoClick = {depositoClickeado ->
-                    navHostController.navigate("depositoScreen/${Json.encodeToString(depositoClickeado)}")
+                    val formattedDto = Json.encodeToString(depositoClickeado)
+                    navHostController.navigate("depositoScreen/${formattedDto}")
+                    Log.d("DTO",depositoClickeado.toString())
+                    Log.d("Formatted DTO",formattedDto)
                 },
                 onNewClick = {
                     navHostController.navigate("depositoScreen/new")
@@ -34,7 +40,8 @@ fun P2NavHost(navHostController: NavHostController) {
                 type = DepositoNavType()
             }
         )) {
-            @Suppress("DEPRECATION") val deposito = it.arguments?.get("deposito") as? DepositoDto
+            val deposito = it.arguments?.getString("deposito")
+            Log.d("TAG",deposito?:"")
             DepositoScreen(deposito = deposito,onBack = { navHostController.navigate(Screen.DepositosList) })
         }
 
