@@ -92,7 +92,7 @@ class FormViewModel @Inject constructor(
              fecha = _uiState.value.fecha.formatAsDate() ?: Date(),
              idCuenta = _uiState.value.idCuenta.toInt(),
              concepto = _uiState.value.concepto,
-             monto = _uiState.value.monto.toInt()
+             monto = _uiState.value.monto.toDouble()
          )
 
         navigateBack()
